@@ -1,0 +1,51 @@
+<html>
+
+<head>
+    <script src="../js/inherit.js"></script>
+</head>
+
+<body>
+    <script>
+    var BasicService = $class({
+        constructor: function() {
+            console.log('BasicService constructor');
+        },
+        foo: function(text) {
+            return text + ' in BasicService.foo';
+        },
+        toString: function() {
+            return this.foo('toString');
+        }
+    });
+
+    var CustomService = BasicService.extends({
+        bar: function(text) {
+            return text + ' in CustomService.bar';
+        }
+    });
+
+    var SuperCustomService = CustomService.extends({
+        constructor: function() {
+
+            this.superCall();
+
+            console.log('SuperCustomService constructor');
+        },
+        foo: function(text) {
+            return this.superCall(text || 'custom foo') + ' and SuperCustomService.foo';
+        },
+        bar: function(text) {
+            return this.superCall(text || 'custom bar') + ' and SuperCustomService.bar';
+        }
+    });
+
+    var service = new SuperCustomService();
+
+    console.log('service foo:', service.foo());
+    console.log('service bar:', service.bar());
+
+    document.write('service ' + service);
+    </script>
+</body>
+
+</html>
